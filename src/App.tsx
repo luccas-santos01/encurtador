@@ -1,10 +1,9 @@
+import EncurtadorDeURL from "./components/EncurtadorDeURL";
+import './App.css';
+
 function App() {
 
-  return (
-    <div>
-      <h1>App</h1>
-    </div>
-  )
+  return <EncurtadorDeURL />
 }
 
 export default App
