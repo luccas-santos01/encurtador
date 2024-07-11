@@ -31,3 +31,7 @@ Para utilizar o componente EncurtadorDeURL, o usuário deve:
 3. Após o encurtamento, a URL encurtada será exibida no mesmo campo de entrada.
 4. O usuário pode então copiar a URL encurtada para a área de transferência clicando no botão "Copiar".
 5. Caso deseje encurtar uma nova URL, o usuário pode clicar no botão "Apagar" para limpar o campo de entrada.
+
+## Deploy
+
+O deploy da aplicação encontra-se neste [link](https://luccas-santos01.github.io/encurtador/)
