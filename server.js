@@ -1,6 +1,6 @@
 import Fastify from 'fastify'
 import './db.js'
-import { createLink } from './links.js'
+import { createLink, findUrlByCode } from './links.js'
 
 const app = Fastify({ logger: true })
 
@@ -28,6 +28,17 @@ app.post('/shorten', async (request, reply) => {
 
     const code = createLink(parsed.toString())
     return reply.code(201).send({ code, short_url: `${request.protocol}://${request.host}/${code}` })
+})
+
+app.get('/:code', async (request, reply) => {
+    const { code } = request.params
+    const url = findUrlByCode(code)
+
+    if (!url) {
+        return reply.code(404).send({ error: 'link não encontrado' })
+    }
+
+    return reply.redirect(url)
 })
 
 try {
