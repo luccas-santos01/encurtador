@@ -6,6 +6,13 @@ const CODE_LENGTH = 7
 
 const insert = db.prepare('INSERT INTO links (code, url) VALUES (?, ?)')
 
+const selectByCode = db.prepare('SELECT url FROM links WHERE code = ?')
+
+export function findUrlByCode(code) {
+    const row = selectByCode.get(code)
+    return row ? row.url : null
+}
+
 function generateCode() {
     const bytes = randomBytes(CODE_LENGTH)
     let code = ''
