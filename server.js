@@ -1,10 +1,33 @@
 import Fastify from 'fastify'
 import './db.js'
+import { createLink } from './links.js'
 
 const app = Fastify({ logger: true })
 
 app.get('/healthz', async () => {
     return { status: 'ok' }
+})
+
+app.post('/shorten', async (request, reply) => {
+    const { url } = request.body ?? {}
+
+    if (typeof url !== 'string' || url.trim() === '') {
+        return reply.code(400).send({ error: 'url é obrigatória' })
+    }
+
+    let parsed
+    try {
+        parsed = new URL(url)
+    } catch {
+        return reply.code(400).send({ error: 'url inválida' })
+    }
+
+    if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+        return reply.code(400).send({ error: 'apenas http e https são permitidos' })
+    }
+
+    const code = createLink(parsed.toString())
+    return reply.code(201).send({ code, short_url: `${request.protocol}://${request.host}/${code}` })
 })
 
 try {
